@@ -1,0 +1,75 @@
+* {
+    box-sizing: border-box;
+    font-family: sans-serif;
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    background-color: #fff;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #313131;
+    padding: 10px;
+    box-shadow: 3px 0 10px black;
+}
+
+nav button {
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+nav p {
+    color: #fff;
+}
+
+.quiz-container {
+    height: 85vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.country-name {
+    font-size: 48px;
+    margin-bottom: 25px;
+}
+
+.countries {
+    display: inline-flex;
+}
+
+.country-flag {
+    border: none;
+    background-color: transparent;
+    border-radius: 5px;
+}
+
+.country-flag.correct {
+    border: 5px solid limegreen;
+}
+
+.country-flag.incorrect {
+    border: 5px solid orangered;
+}
+
+.country-flag img {
+    height: 100px;
+    vertical-align:bottom;
+}
+
+.country-flag:not(:last-child) {
+    margin-right: 25px;
+}
+
+#showNext.hidden {
+    display: none;
+}
