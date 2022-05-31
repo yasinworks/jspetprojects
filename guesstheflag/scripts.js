@@ -1,8 +1,6 @@
 const countryApi = 'https://countriesnow.space/api/v0.1/countries/flag/images';
 const startBtn = document.querySelector('#startGame');
 const showNextBtn = document.querySelector('#showNext');
-const countryName = document.querySelector('.country-name span');
-const flagsContainer = document.querySelector('.countries');
 let countries = [];
 let questions = [];
 let currentQuestion = 0;
@@ -59,6 +57,8 @@ function generateQuestion() {
 }
 
 function renderQuestions() {
+    const countryName = document.querySelector('.country-name span');
+    const flagsContainer = document.querySelector('.countries');
     const q = questions[currentQuestion];
     const qShuffled = q.answers.sort(() => Math.random() - 0.5);
     // console.log(questions)
