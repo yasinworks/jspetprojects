@@ -73,3 +73,14 @@ nav p {
 #showNext.hidden {
     display: none;
 }
+
+.score {
+    width: 100vw;
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+}
+
+#score, #highScore {
+    color: #313131;
+}
