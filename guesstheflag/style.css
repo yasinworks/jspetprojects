@@ -53,12 +53,12 @@ nav p {
     border-radius: 5px;
 }
 
-.country-flag.correct {
-    border: 5px solid limegreen;
-}
-
 .country-flag.incorrect {
     border: 5px solid orangered;
+}
+
+.country-flag.correct {
+    border: 5px solid limegreen;
 }
 
 .country-flag img {

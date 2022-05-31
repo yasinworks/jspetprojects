@@ -1,6 +1,7 @@
 const countryApi = 'https://restcountries.com/v3.1/all';
 const startBtn = document.querySelector('#startGame');
 const showNextBtn = document.querySelector('#showNext');
+const scoreSpan = document.querySelector('#score');
 const countryName = document.querySelector('.country-name span');
 const flagsContainer = document.querySelector('.countries');
 let countries = [];
@@ -14,7 +15,6 @@ startBtn.addEventListener('click', () => {
 showNextBtn.addEventListener('click', () => {
     showNextQuestion();
 })
-
 
 function createElement(element, className = '') {
     const created = document.createElement(element);
@@ -35,6 +35,12 @@ async function startGame() {
     renderQuestions();
 }
 
+function showNextQuestion() {
+    showNextBtn.classList.add('hidden');
+    currentQuestion++;
+    renderQuestions();
+}
+
 function generateQuestion() {
     for (let i = 0; i < 10; i++) {
         const IDs = [Math.round(Math.random() * 250), Math.round(Math.random() * 250), Math.round(Math.random() * 250), Math.round(Math.random() * 250)];
@@ -46,22 +52,23 @@ function generateQuestion() {
 
         questions.push(q);
 
-    };
+    }
 }
 
 function renderQuestions() {
     const q = questions[currentQuestion];
+    const qShuffled = q.answers.sort(() => Math.random() - 0.5);
     console.log(questions)
 
     countryName.textContent = countries[+q.correctAnswer].name.common;
 
     flagsContainer.innerHTML = '';
 
-    q.answers.forEach(answer => {
+    q.answers.forEach((answer, index) => {
         const flag = createElement('button', 'country-flag');
         const flagImg = createElement('img');
 
-        flagImg.src = countries[+answer].flags.png;
+        flagImg.src = countries[+qShuffled[index]].flags.png;
         flagImg.dataset.id = answer.toString();
 
         flag.append(flagImg);
@@ -73,24 +80,23 @@ function renderQuestions() {
 }
 
 function handleAnswer(answer) {
+    const countries = document.querySelector('.countries');
     const flags = document.querySelectorAll('.country-flag');
 
-    flags.forEach(flag => {
-        flag.addEventListener('click', (e) => {
-            if (answer === e.target.dataset.id) {
-                flag.classList.add('correct');
-                if (currentQuestion < questions.length) {
-                    showNextBtn.classList.remove('hidden');
-                }
-            } else {
-                flag.classList.add('incorrect');
-            }
-        });
-    });
+    countries.addEventListener('click', (e) => handleConditions(e), {once: true})
+
+    const handleConditions = function(e) {
+        if (!e.target.dataset.id) return;
+        let flag = e.target.parentElement;
+        if (answer === e.target.dataset.id) {
+            flag.classList.add('correct');
+            score++
+            if (currentQuestion < questions.length) showNextBtn.classList.remove('hidden');
+        } else {
+            flag.classList.add('incorrect');
+            flags.forEach(f => { if (answer === f.firstChild.dataset.id) f.classList.add('correct') })
+            if (currentQuestion < questions.length) showNextBtn.classList.remove('hidden');
+        }
+    }
 }
 
-function showNextQuestion() {
-    showNextBtn.classList.add('hidden');
-    currentQuestion++;
-    renderQuestions();
-}
